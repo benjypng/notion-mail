@@ -59,13 +59,9 @@ mailListener.on("error", function (err) {
 
 mailListener.on("mail", async function (mail, seqno) {
   // do something with the whole email as a single object
-  if (mail.subject.toLowerCase().startsWith("notionmail")) {
-    const subject = `Mail No: ${seqno} ${mail.subject
-      .replace("notionmail", "")
-      .trim()}`;
+  if (mail.subject.toLowerCase().startsWith("nm")) {
+    const subject = `${mail.subject.replace("notionmail", "").trim()}`;
     const text = mail.text;
-    console.log("SUBJECT", subject);
-    console.log("TEXT", text);
 
     try {
       const response = await notion.pages.create({
