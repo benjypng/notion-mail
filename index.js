@@ -84,7 +84,7 @@ mailListener.on("mail", async function (mail, seqno) {
         children: [
           {
             object: "block",
-            bulleted_list_item: {
+            paragraph: {
               rich_text: [
                 {
                   text: {
