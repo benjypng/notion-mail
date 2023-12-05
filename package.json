@@ -1,0 +1,26 @@
+{
+  "name": "notion-mail",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.jss"
+  },
+  "author": "hkgnp",
+  "license": "ISC",
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer"
+      ]
+    ]
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.14",
+    "dotenv": "^16.3.1",
+    "imap": "^0.8.19",
+    "mail-listener5": "^2.1.2"
+  }
+}
