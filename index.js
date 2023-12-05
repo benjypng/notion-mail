@@ -59,7 +59,7 @@ mailListener.on("error", function (err) {
 
 mailListener.on("mail", async function (mail, seqno) {
   // do something with the whole email as a single object
-  if (mail.subject.toLowerCase().startsWith("nm")) {
+  if (mail.subject.toLowerCase().startsWith("notionmail")) {
     const subject = `${mail.subject.replace("notionmail", "").trim()}`;
     const text = mail.text;
 
