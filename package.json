@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.3.2",
     "imap": "^0.8.19",
     "mail-listener5": "^2.1.2"
   }
