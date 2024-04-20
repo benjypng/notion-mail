@@ -1,3 +1,4 @@
+//@ts-ignore
 import { MailListener } from 'mail-listener5';
 import { Client } from '@notionhq/client';
 import dotenv from 'dotenv';
