@@ -4,8 +4,10 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+RUN npm install -g pnpm
+
+RUN pnpm install
 
 COPY . .
 
-CMD npm start
+CMD pnpm run start
