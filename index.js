@@ -17,6 +17,11 @@ const mailOptions = {
   authTimeout: 5000, // Default by node-imap,
   debug: console.log, // Or your custom function with only one incoming argument. Default: null
   autotls: "never", // default by node-imap
+  keepalive: {
+    interval: 10000,
+    idleinterval: 300000,
+    forceNoop: true,
+  },
   tlsOptions: { rejectUnauthorized: false },
   mailbox: "INBOX", // mailbox to monitor
   searchFilter: ["UNSEEN"], // the search filter being used after an IDLE notification has been retrieved
@@ -28,7 +33,6 @@ const mailOptions = {
 
 const mailListener = new MailListener(mailOptions);
 
-mailListener.start();
 mailListener.on("server:connected", function () {
   console.log("imapConnected");
 });
@@ -44,19 +48,6 @@ mailListener.on("server:disconnected", function () {
 mailListener.on("error", function (err) {
   console.log(err);
 });
-
-// mailListener.on("headers", function (headers, seqno) {
-//   // do something with headers
-// });
-//
-// mailListener.on("body", function (body, seqno) {
-//   // console.log(`Email#${seqno} body: `, body);
-// });
-//
-// mailListener.on("attachment", function (attachment, path, seqno) {
-//   // do something with attachment
-// });
-
 mailListener.on("mail", async function (mail, seqno) {
   // do something with the whole email as a single object
   if (mail.subject.toLowerCase().startsWith("notionmail")) {
@@ -83,6 +74,10 @@ mailListener.on("mail", async function (mail, seqno) {
               },
             ],
           },
+          ["Inbox?"]: {
+            type: "checkbox",
+            checkbox: true,
+          },
         },
         children: [
           {
@@ -106,3 +101,5 @@ mailListener.on("mail", async function (mail, seqno) {
     }
   }
 });
+
+mailListener.start();
