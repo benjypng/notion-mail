@@ -79,6 +79,10 @@ mailListener.on('mail', async (mail, _seqno) => {
               },
             ],
           },
+          Inbox: {
+            type: 'checkbox',
+            checkbox: true,
+          },
         },
         children: [
           {
