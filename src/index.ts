@@ -1,4 +1,4 @@
-//@ts-ignore
+//@ts-expect-error no types for mail-listener5
 import { MailListener } from 'mail-listener5';
 import { Client } from '@notionhq/client';
 import dotenv from 'dotenv';
@@ -50,16 +50,15 @@ mailListener.on('server:connected', () => {
 //  console.log(err);
 //});
 
-//@ts-ignore
-mailListener.on('mail', async (mail, _seqno) => {
+//@ts-expect-error - mail is any
+mailListener.on('mail', async (mail) => {
   // do something with the whole email as a single object
   const mailTime = Math.floor(Date.parse(mail.date) / 1000);
   const currentTime = Math.floor(Date.now() / 1000);
   if (currentTime - mailTime > 10) return;
 
-  if (/(\b[nN][mM]\b)/.exec(mail.subject)) {
-    // NOTE: This filter may be a little redundant because it is being done in Gmail
-    const subject = mail.subject.replace(/(\b[nN][mM]\b)/, '').trim();
+  if (mail.to.text === (process.env.NOTION_EMAIL as string)) {
+    const subject = mail.subject;
     const text = mail.text;
 
     try {
@@ -68,7 +67,7 @@ mailListener.on('mail', async (mail, _seqno) => {
           database_id: process.env.DATABASE_ID as string,
         },
         properties: {
-          Name: {
+          Title: {
             type: 'title',
             title: [
               {
@@ -78,10 +77,6 @@ mailListener.on('mail', async (mail, _seqno) => {
                 },
               },
             ],
-          },
-          Inbox: {
-            type: 'checkbox',
-            checkbox: true,
           },
         },
         children: [
